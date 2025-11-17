@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="https://ordertracker.com/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             name="OrderService"
+             targetNamespace="https://ordertracker.com/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+
+    <types>
+        <xsd:schema elementFormDefault="qualified" targetNamespace="https://ordertracker.com/">
+            <xsd:complexType name="Order">
+                <xsd:sequence>
+                    <xsd:element name="status" type="xsd:string"/>
+                    <xsd:element name="location" type="xsd:string"/>
+                    <xsd:element name="departure" type="xsd:string"/>
+                    <xsd:element name="collected" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="Rating">
+                <xsd:sequence>
+                    <xsd:element name="ratingVal" type="xsd:float"/>
+                    <xsd:element name="orderId" type="xsd:int"/>
+                    <xsd:element name="userId" type="xsd:int"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="User">
+                <xsd:sequence>
+                    <xsd:element name="firstName" type="xsd:string"/>
+                    <xsd:element name="lastName" type="xsd:string"/>
+                    <xsd:element name="email" type="xsd:string"/>
+                    <xsd:element name="username" type="xsd:string"/>
+                    <xsd:element name="password" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="AddRatingRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="rating" type="tns:Rating"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="AddRatingResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="success" type="xsd:int"/>
+                        <xsd:element name="message" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="RegisterUserRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="user" type="tns:User"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="RegisterUserResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="success" type="xsd:int"/>
+                        <xsd:element name="message" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="LoginRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="email" type="xsd:string"/>
+                        <xsd:element name="password" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="LoginResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="success" type="xsd:int"/>
+                        <xsd:element name="message" type="xsd:string"/>
+                        <xsd:element name="data" type="tns:User"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="DeleteUserRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="email" type="xsd:string"/>
+                        <xsd:element name="password" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteUserResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="success" type="xsd:int"/>
+                        <xsd:element name="message" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="AddOrderRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="location" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="AddOrderResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="success" type="xsd:int"/>
+                        <xsd:element name="message" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteOrderRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="orderId" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="DeleteOrderResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="success" type="xsd:int"/>
+                        <xsd:element name="message" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ChangeOrderLocationRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="orderId" type="xsd:int"/>
+                        <xsd:element name="location" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="ChangeOrderLocationResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="success" type="xsd:int"/>
+                        <xsd:element name="message" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+
+    <message name="AddOrderRequest">
+        <part name="parameters" element="tns:AddOrderRequest"/>
+    </message>
+    <message name="AddOrderResponse">
+        <part name="parameters" element="tns:AddOrderResponse"/>
+    </message>
+    <message name="DeleteOrderRequest">
+        <part name="parameters" element="tns:DeleteOrderRequest"/>
+    </message>
+    <message name="DeleteOrderResponse">
+        <part name="parameters" element="tns:DeleteOrderResponse"/>
+    </message>
+    <message name="ChangeOrderLocationRequest">
+        <part name="parameters" element="tns:ChangeOrderLocationRequest"/>
+    </message>
+    <message name="ChangeOrderLocationResponse">
+        <part name="parameters" element="tns:ChangeOrderLocationResponse"/>
+    </message>
+
+    <message name="AddRatingRequest">
+        <part name="parameters" element="tns:AddRatingRequest"/>
+    </message>
+    <message name="AddRatingResponse">
+        <part name="parameters" element="tns:AddRatingResponse"/>
+    </message>
+    <message name="RegisterUserRequest">
+        <part name="parameters" element="tns:RegisterUserRequest"/>
+    </message>
+    <message name="RegisterUserResponse">
+        <part name="parameters" element="tns:RegisterUserResponse"/>
+    </message>
+    <message name="LoginRequest">
+        <part name="parameters" element="tns:LoginRequest"/>
+    </message>
+    <message name="LoginResponse">
+        <part name="parameters" element="tns:LoginResponse"/>
+    </message>
+    <message name="DeleteUserRequest">
+        <part name="parameters" element="tns:DeleteUserRequest"/>
+    </message>
+    <message name="DeleteUserResponse">
+        <part name="parameters" element="tns:DeleteUserResponse"/>
+    </message>
+
+    <portType name="OrderServicePortType">
+        <operation name="AddOrder">
+            <input message="tns:AddOrderRequest"/>
+            <output message="tns:AddOrderResponse"/>
+        </operation>
+        <operation name="DeleteOrder">
+            <input message="tns:DeleteOrderRequest"/>
+            <output message="tns:DeleteOrderResponse"/>
+        </operation>
+        <operation name="ChangeOrderLocation">
+            <input message="tns:ChangeOrderLocationRequest"/>
+            <output message="tns:ChangeOrderLocationResponse"/>
+        </operation>
+        <operation name="AddRating">
+            <input message="tns:AddRatingRequest"/>
+            <output message="tns:AddRatingResponse"/>
+        </operation>
+        <operation name="RegisterUser">
+            <input message="tns:RegisterUserRequest"/>
+            <output message="tns:RegisterUserResponse"/>
+        </operation>
+        <operation name="Login">
+            <input message="tns:LoginRequest"/>
+            <output message="tns:LoginResponse"/>
+        </operation>
+        <operation name="DeleteUser">
+            <input message="tns:DeleteUserRequest"/>
+            <output message="tns:DeleteUserResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="OrderServiceBinding" type="tns:OrderServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="AddOrder">
+            <soap:operation soapAction="https://ordertracker.com/orderService/AddOrder"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="DeleteOrder">
+            <soap:operation soapAction="https://ordertracker.com/orderService/DeleteOrder"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="ChangeOrderLocation">
+            <soap:operation soapAction="https://ordertracker.com/orderService/ChangeOrderLocation"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+
+        <operation name="AddRating">
+            <soap:operation soapAction="https://ordertracker.com/orderService/AddRating"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="RegisterUser">
+            <soap:operation soapAction="https://ordertracker.com/orderService/RegisterUser"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="Login">
+            <soap:operation soapAction="https://ordertracker.com/orderService/Login"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="DeleteUser">
+            <soap:operation soapAction="https://ordertracker.com/orderService/DeleteUser"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="OrderService">
+        <port name="OrderServicePort" binding="tns:OrderServiceBinding">
+            <soap:address location="https://localhost:8080/wsdl/"/>
+        </port>
+    </service>
+</definitions>
